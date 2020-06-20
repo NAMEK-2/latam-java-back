@@ -25,6 +25,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	/**
+	 *  EndPoint que calcula cuanto falta para el cumpleaños de un usuario, devolviendo un regalo
+	 *  si es que esta de cumpleaños.
+	 * @param user: UserEntryDto
+	 * @return: Json
+	 */
 	@PostMapping(path="birthdate/congrats")
 	public ResponseEntity<String> getBirthdayDate(
 			@Valid @RequestBody UserEntryDto user

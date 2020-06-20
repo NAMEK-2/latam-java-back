@@ -46,6 +46,42 @@ public class UserControllerTest {
 			.andExpect(jsonPath("$.status").value(true));
 	}
 	
+	
+	@Test
+	public void returnStatusOkItsBirthday() throws JsonProcessingException, Exception {
+		
+		LocalDate today = LocalDate.now();
+		today = today.minusYears(10);
+		
+		UserEntryDto userEntry = new UserEntryDto();
+		userEntry.setName("Daniel");
+		userEntry.setLastName("Leon");
+		userEntry.setBirthdate((today.getDayOfMonth() + "-" + today.getMonthValue() + "-" + today.getYear()).toString());
+	
+		mockmvc.perform(MockMvcRequestBuilders.post("/user/birthdate/congrats")
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(userEntry)))
+			.andExpect(jsonPath("$.data.birthdateMessage").isNotEmpty());
+	}
+	
+	@Test
+	public void returnStatusOkNotBirthday() throws JsonProcessingException, Exception {
+		
+		LocalDate today = LocalDate.now();
+		today = today.minusYears(10);
+		today = today.minusDays(2);
+		
+		UserEntryDto userEntry = new UserEntryDto();
+		userEntry.setName("Daniel");
+		userEntry.setLastName("Leon");
+		userEntry.setBirthdate((today.getDayOfMonth() + "-" + today.getMonthValue() + "-" + today.getYear()).toString());
+	
+		mockmvc.perform(MockMvcRequestBuilders.post("/user/birthdate/congrats")
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(userEntry)))
+			.andExpect(jsonPath("$.data.birthdateMessage").isEmpty());
+	}
+	
 	@Test
 	public void returnStatusNotOk() throws JsonProcessingException, Exception {
 		
