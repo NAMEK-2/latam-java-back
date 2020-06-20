@@ -4,8 +4,8 @@ Api Rest in Spring-boot
 
 # Requiriments
 
-java 1.8 
-Maven
+- JAVA 1.8
+- MAVEN
 
 # Develoment
 
